@@ -57,7 +57,7 @@ class WebsiteUser(HttpUser):
             'limit_start': str(limit_start),
         }
 
-        if filters:
+        if filters
             params['filters'] = json.dumps(filters)
         if fields:
             params['fields'] = json.dumps(fields)
