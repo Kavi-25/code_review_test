@@ -1,71 +1,24 @@
-# name: PR Agent
-# on:
-#   pull_request:
-#     types: [opened, reopened, ready_for_review]
-#   issue_comment:
-# jobs:
-#   pr_agent_job:
-#     if: ${{ github.event.sender.type != 'Bot' }}
-#     runs-on: ubuntu-latest
-#     permissions:
-#       issues: write
-#       pull-requests: write
-#       contents: write
-#     steps:
-#       - name: PR Agent action step
-#         uses: qodo-ai/pr-agent@main
-#         env:
-#           OPENAI_KEY: ${{ secrets.GEMINI_API_KEY }}
-#           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-          
 name: PR Agent (Gemini)
-
 on:
   pull_request:
-    # include 'synchronize' so it re-runs when new commits are pushed,
-    # and 'ready_for_review' for draft -> ready transitions
-    types: [opened, reopened, synchronize, ready_for_review]
+    types: [opened, reopened, ready_for_review]
   issue_comment:
-    types: [created]  # you can also add 'edited' if you want
-
 jobs:
   pr_agent_job:
-    # avoid bot loops, and only run on issue_comment if a valid slash command is used
-    if: >
-      ${{
-        github.event.sender.type != 'Bot' &&
-        (
-          github.event_name != 'issue_comment' ||
-          contains(github.event.comment.body, '/review') ||
-          contains(github.event.comment.body, '/describe') ||
-          contains(github.event.comment.body, '/improve')
-        )
-      }}
-    # Use your self-hosted runner, or switch to 'ubuntu-latest' if you prefer GitHub-hosted
+    if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
-
     permissions:
       issues: write
       pull-requests: write
       contents: write
-
     steps:
-      - name: Run PR-Agent
-        # pin to a tagged version instead of @main to avoid breaking changes
-        uses: qodo-ai/pr-agent@v0.34.0
+      - name: PR Agent action step
+        uses: qodo-ai/pr-agent@main
         env:
-          # GitHub token to read PR data and post comments
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-
-          # Force Gemini as the only model so it won't fall back to OpenAI
           config.model: "gemini/gemini-1.5-flash"
           config.fallback_models: '["gemini/gemini-1.5-flash"]'
-
-          # Gemini key from Google AI Studio (free tier works for testing)
-          # PR-Agent supports the dotted env var for Google AI Studio:
           GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-
-          # Auto behaviors on PR events (you can set any of these to "false")
           github_action_config.auto_review: "true"
           github_action_config.auto_describe: "true"
           github_action_config.auto_improve: "true"
