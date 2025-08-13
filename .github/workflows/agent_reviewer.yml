@@ -22,3 +22,31 @@ jobs:
           github_action_config.auto_review: "true"
           github_action_config.auto_describe: "true"
           github_action_config.auto_improve: "true"
+
+    PR_REVIEWER__EXTRA_INSTRUCTIONS: |
+            Act as a senior reviewer. Prioritize:
+            - Security issues (injection, unsafe eval, secrets, SSRF, XSS, CORS).
+            - Logic bugs and concurrency/data-race risks.
+            - Backwards compatibility and API surface changes.
+            - Tests: point out missing/weak coverage and suggest specific test cases.
+            - Performance hotspots; flag N+1 queries and unnecessary allocations.
+            In Angular projects (v19), verify standalone components, signals,
+            control flow syntax, and strict type safety. Suggest minimal diffs.
+
+          # Improve tool prompt
+    PR_CODE_SUGGESTIONS__EXTRA_INSTRUCTIONS: |
+            Provide concrete, minimal diffs only. Prefer idiomatic Angular 19
+            patterns, RxJS best practices, accessibility (ARIA), and i18n safety.
+            Avoid style nitpicks unless they reduce complexity or defects.
+
+          # Describe tool prompt
+  PR_DESCRIPTION__EXTRA_INSTRUCTIONS: |
+            Produce a crisp PR title; then a summary with bullet points:
+            - What changed + why
+            - Risk level + rollback plan
+            - Affected modules/routes
+            - Manual test steps
+            Add labels only if clearly relevant.
+
+          # (Optional) make review output compact
+          PR_REVIEWER__PERSISTENT_COMMENT: "true"
