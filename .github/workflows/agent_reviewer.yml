@@ -16,13 +16,13 @@ jobs:
         uses: qodo-ai/pr-agent@main
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-          # config.model: "gemini/gemini-1.5-flash"
-          # config.fallback_models: '["gemini/gemini-1.5-flash"]'
-          # GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          config.model: "groq/deepseek-r1-distill-llama-70b"
-          config.fallback_models: '["groq/deepseek-r1-distill-llama-70b"]'
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          # github_action_config.auto_review: "true"
-          # github_action_config.auto_describe: "true"
+          config.model: "gemini/gemini-1.5-flash"
+          config.fallback_models: '["gemini/gemini-1.5-flash"]'
+          GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # config.model: "groq/deepseek-r1-distill-llama-70b"
+          # config.fallback_models: '["groq/deepseek-r1-distill-llama-70b"]'
+          # GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          github_action_config.auto_review: "true"
+          github_action_config.auto_describe: "true"
           github_action_config.auto_improve: "true"
           PR_REVIEWER__PERSISTENT_COMMENT: "true"
