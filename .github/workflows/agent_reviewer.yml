@@ -22,7 +22,7 @@ jobs:
           config.model: "groq/deepseek-r1-distill-llama-70b"
           config.fallback_models: '["groq/deepseek-r1-distill-llama-70b"]'
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          github_action_config.auto_review: "true"
-          github_action_config.auto_describe: "true"
+          # github_action_config.auto_review: "true"
+          # github_action_config.auto_describe: "true"
           github_action_config.auto_improve: "true"
           PR_REVIEWER__PERSISTENT_COMMENT: "true"
